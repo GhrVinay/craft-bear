@@ -28,4 +28,19 @@ jobs:
 
       - name: Trigger scheduled job
         run: |
-          echo "The scheduled job is running after ${{ github.event.inputs.delay_minutes }} minutes delay at: `date`."
+          echo "Scheduled job is triggered after ${{ github.event.inputs.delay_minutes }} minutes delay at: `date`."
+
+  job_action:
+    runs-on: ubuntu-latest
+    needs: ["delay_job"]
+    steps:
+      - name: Get ChatGPT completion
+        id: chatgpt
+        uses: cahaseler/openai-chatgpt-action@v1
+        with:
+          apiKey: ${{ secrets.OPENAI_API_KEY }}
+          prompt: 'Please generate a movie suggestion list (list should contain at least 8) for english and telugu language each, for following genres'
+          input: 'Action, Comedy'
+          model: 'gpt-3.5-turbo'
+          temperature: 0.3
+          max_tokens: 300
