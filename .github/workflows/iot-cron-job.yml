@@ -1,0 +1,27 @@
+name: IoT Schedule Job
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      delay_minutes:
+        description: 'Delay in minutes before running the job'
+        required: true
+        default: '5'
+
+jobs:
+  delay_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Calculate delay
+        id: calculate
+        run: echo "::set-output name=delay::$((${{ github.event.inputs.delay_minutes }} * 60))"
+
+      - name: Wait for the delay
+        run: sleep ${{ steps.calculate.outputs.delay }}
+
+      - name: Run the scheduled job
+        run: echo "The scheduled job is running after ${{ github.event.inputs.delay_minutes }} minutes delay."
