@@ -20,9 +20,9 @@ jobs:
         id: schedule
         run: |
           echo "Triggered time: `date`."
-#          convert to seconds and save to GITHUB_OUTPUT
+          #convert to seconds and save to GITHUB_OUTPUT
           echo "delay=$((${{ github.event.inputs.delay_minutes }} * 60))" >> $GITHUB_OUTPUT
-          echo "delay in seconds:: ${{ steps.schedule.outputs.delay }}"
+          echo "delay in seconds: ${{ steps.schedule.outputs.delay }}"
           sleep ${{ steps.schedule.outputs.delay }}
 
       - name: Trigger scheduled job
