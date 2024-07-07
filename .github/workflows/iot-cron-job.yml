@@ -36,7 +36,7 @@ jobs:
     steps:
       - name: Get ChatGPT completion
         id: chatgpt
-        uses: cahaseler/openai-chatgpt-action@v1
+        uses: cahaseler/openai-api@v1
         with:
           apiKey: ${{ secrets.OPENAI_API_KEY }}
           prompt: 'Please generate a movie suggestion list (list should contain at least 8) for english and telugu language each, for following genres'
