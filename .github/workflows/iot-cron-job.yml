@@ -16,12 +16,19 @@ jobs:
   delay_job:
     runs-on: ubuntu-latest
     steps:
-      - name: Calculate delay
+      - name: Calculate Delay
         id: calculate
-        run: echo "::set-output name=delay::$((${{ github.event.inputs.delay_minutes }} * 60))"
+        run: |
+          echo "Triggered time: `date`"
+          echo "$((${{ github.event.inputs.delay_minutes }} * 60))"
+          echo "delay=$((${{ github.event.inputs.delay_minutes }} * 60))" >> $GITHUB_OUTPUT
+          echo "$GITHUB_OUTPUT"
 
-      - name: Wait for the delay
-        run: sleep ${{ steps.calculate.outputs.delay }}
+      - name: Job Waiting..
+        run: |
+          sleep ${{ steps.calculate.outputs.delay }}
 
-      - name: Run the scheduled job
-        run: echo "The scheduled job is running after ${{ github.event.inputs.delay_minutes }} minutes delay."
+      - name: Trigger Scheduled Job
+        run: |
+          echo "The scheduled job is running after ${{ github.event.inputs.delay_minutes }} minutes delay."
+          echo "at: `date` "
